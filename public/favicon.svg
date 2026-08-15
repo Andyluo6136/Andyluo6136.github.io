@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="AL monogram icon">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0b3d91"/>
+      <stop offset="100%" stop-color="#29a19c"/>
+    </linearGradient>
+  </defs>
+  <rect x="2" y="2" width="60" height="60" rx="14" fill="url(#g)"/>
+  <path d="M20 45L29 19H35L44 45H38L36 38H28L26 45H20ZM29.5 33H34.5L32 25.5L29.5 33Z" fill="#ffffff"/>
+  <path d="M46 19H52V39H58V45H46V19Z" fill="#ffffff"/>
+</svg>
