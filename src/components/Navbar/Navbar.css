@@ -1,0 +1,52 @@
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  width: 100%;
+  backdrop-filter: blur(12px);          /* Glass effect */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Constrain width to match your .page-shell */
+.navbar-container {
+  width: min(1100px, calc(100% - 2rem));
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 4.5rem;
+}
+
+.navbar-logo {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #941c1c;
+  text-decoration: none;
+}
+
+.navbar-links {
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+  margin: 0 auto;
+  padding: 0;
+}
+
+.navbar-links NavLink {
+  color: rgba(247, 247, 248, 0.8);
+  text-decoration: none;
+  font-size: 1.5rem;
+  font-family: "montserrat";
+  transition: color 180ms ease;
+}
+
+.navbar-links NavLink:hover {
+  color: #af3939;
+}
+
+/* Hide navigation links on small mobile screens */
+@media (max-width: 640px) {
+  .navbar-links {
+    display: none;
+  }
+}

@@ -1,0 +1,25 @@
+.games-page {
+  min-height: 100vh;
+  display: grid;
+  place-content: center;
+  gap: 1rem;
+  text-align: center;
+  color: #13263e;
+  /* Let the shared ice texture in App.css show through. */
+  background: transparent;
+  font-family: 'Press Start 2P', monospace;
+}
+
+.games-page h1,
+.games-page p {
+  margin: 0;
+}
+
+.games-page h1 {
+  font-size: 2rem;
+  text-shadow: 2px 2px 0 #82d1ee;
+}
+
+.games-page p {
+  font-size: 0.8rem;
+}

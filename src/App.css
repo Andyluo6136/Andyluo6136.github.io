@@ -1,0 +1,92 @@
+html,
+body,
+#root {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+body {
+  background: #ffffff;
+  color: #13263e;
+}
+
+.root {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.page-shell {
+  width: 100%;
+  height: 100%;
+  flex: 1;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.ice-world {
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  position: relative;
+  background-color: #DBF1FD;
+  background-image: repeating-linear-gradient(
+    45deg,
+    rgba(0, 0, 0, 0.015) 0px,
+    rgba(0, 0, 0, 0.015) 2px,
+    transparent 2px,
+    transparent 8px
+  );
+}
+
+.route-content {
+  position: absolute;
+  inset: 0;
+}
+
+.player-gif {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  width: 8rem;
+  height: auto;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  user-select: none;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.player-gif--stationary {
+  width: 7rem;
+}
+
+.skate-trail {
+  position: absolute;
+  inset: 0;
+  z-index: 8;
+  pointer-events: none;
+}
+
+.skate-trail__line {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1.5px; /* Thin, crisp cut line */
+  border-radius: 1px;
+  background: linear-gradient(180deg, rgb(231, 245, 245), rgba(243, 248, 251, 0.6));
+  box-shadow: 0 0 2px rgba(255, 255, 255, 0.8);
+  transform-origin: center center;
+  opacity: 0.85;
+}
+
+@media (max-width: 640px) {
+  .player-gif { 
+    width: 96px; 
+  }
+}

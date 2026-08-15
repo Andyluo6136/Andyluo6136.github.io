@@ -1,0 +1,102 @@
+.nav-arrow {
+  position: absolute;
+  top: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  color: #13263e;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.8rem;
+  text-shadow: 3px 3px 0 #82d1ee;
+  transform: translateY(-50%);
+  z-index: 5;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  animation: navArrowPulse 0.9s steps(2, end) infinite;
+}
+
+.nav-arrow:focus-visible {
+  outline: 3px solid #3b5998;
+  outline-offset: 4px;
+}
+
+.nav-arrow--left {
+  left: 1.25rem;
+}
+
+.nav-arrow__label {
+  font-size: 1.05rem;
+  letter-spacing: 0.08em;
+  text-shadow: 3px 3px 0 #82d1ee, -1px -1px 0 #13263e;
+}
+
+.nav-arrow__pixel {
+  position: relative;
+  display: block;
+  width: 92px;
+  height: 60px;
+}
+
+/* The stepped outline keeps the arrow deliberately 8-bit rather than smooth. */
+.nav-arrow__pixel::before {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 62px;
+  height: 60px;
+  content: '';
+  background: currentColor;
+  clip-path: polygon(
+    0 25%, 45% 25%, 45% 0,
+    60% 0, 60% 15%, 75% 15%,
+    75% 30%, 100% 30%, 100% 70%,
+    75% 70%, 75% 85%, 60% 85%,
+    60% 100%, 45% 100%, 45% 75%,
+    0 75%
+  );
+}
+
+.nav-arrow__pixel--left {
+  transform: scaleX(-1);
+}
+
+.nav-arrow__trail,
+.nav-arrow__trail::after {
+  position: absolute;
+  top: 10px;
+  left: 0;
+  width: 9px;
+  height: 40px;
+  content: '';
+  background: currentColor;
+}
+
+.nav-arrow__trail::after {
+  top: 0;
+  left: 17px;
+}
+
+@keyframes navArrowPulse {
+  50% {
+    color: #3b5998;
+    transform: translateY(-50%) scale(1.08);
+  }
+}
+
+@media (max-width: 640px) {
+  .nav-arrow { font-size: 0.6rem; }
+  .nav-arrow--left { left: 0.5rem; }
+  .nav-arrow__label { font-size: 0.72rem; }
+  .nav-arrow__pixel {
+    width: 70px;
+    height: 46px;
+    transform: scale(0.77);
+    transform-origin: center;
+  }
+
+  .nav-arrow__pixel--left {
+    transform: scale(-0.77, 0.77);
+  }
+}

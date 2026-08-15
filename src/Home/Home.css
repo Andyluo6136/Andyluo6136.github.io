@@ -1,0 +1,87 @@
+.welcome-title {
+  font-size: 3rem;
+  margin: 0 0 0.75rem 0;
+  text-shadow: 2px 2px 0px #82d1ee;
+  letter-spacing: 1px;
+  line-height: 1.4;
+}
+
+/* Floating & Continuous Bouncing Welcome Banner */
+.welcome-banner {
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  text-align: center;
+  font-family: 'Press Start 2P', monospace;
+  color: #13263e;
+  z-index: 20;
+  pointer-events: none;
+  
+  /* Run floatDown first, then run bounce continuously */
+  animation: 
+    floatDown 1s cubic-bezier(0.175, 0.885, 0.32, 1.27) forwards,
+    bounce 2s ease-in-out infinite 1s; 
+}
+
+.welcome-subtitle {
+  font-size: 0.9rem;
+  margin: 0;
+  color: #3b5998;
+  text-shadow: 1px 1px 0px #c4f0ff;
+}
+
+.home-intro {
+  position: absolute;
+  right: 10%;
+  bottom: 6%;
+  left: 10%;
+  margin: 0;
+  color: #13263e;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.7rem;
+  line-height: 1.8;
+  text-align: center;
+  text-shadow: 1px 1px 0 #82d1ee;
+  z-index: 4;
+  pointer-events: none;
+}
+
+/* Keyframe animation for initial float down */
+@keyframes floatDown {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -60px);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translate(-50%, 0);
+  }
+  50% {
+    transform: translate(-50%, -12px);
+  }
+}
+
+/* Responsive scaling for mobile devices */
+@media (max-width: 640px) {
+  .welcome-title {
+    font-size: 1rem;
+  }
+  .welcome-subtitle {
+    font-size: 0.7rem;
+  }
+
+  .home-intro {
+    right: 8%;
+    bottom: 8%;
+    left: 8%;
+    font-size: 0.48rem;
+    line-height: 1.7;
+  }
+
+}

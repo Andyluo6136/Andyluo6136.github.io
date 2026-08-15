@@ -1,0 +1,7 @@
+.nav-arrow--right {
+  right: 1.25rem;
+}
+
+@media (max-width: 640px) {
+  .nav-arrow--right { right: 0.5rem; }
+}

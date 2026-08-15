@@ -1,0 +1,41 @@
+.footer-bar {
+  width: 100%;
+  margin-top: auto; /* Keeps footer at the bottom even on short pages */
+  background: rgba(10, 14, 28, 0.72);
+  backdrop-filter: blur(16px);
+  border-top: 1px solid rgba(255, 255, 255, 0.12); /* Clean top horizontal bar */
+  padding: 1.5rem 0;
+}
+
+.footer-container {
+  max-width: 900px; /* Matches your centered page-shell width */
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.footer-container p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: rgba(231, 236, 255, 0.6);
+}
+
+.footer-links {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.footer-links a {
+  color: rgba(231, 236, 255, 0.75);
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: color 180ms ease;
+}
+
+.footer-links a:hover {
+  color: #8ea6ff;
+}
