@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;500;600;700&display=swap');
+
 html,
 body,
 #root {
@@ -6,11 +8,21 @@ body,
   margin: 0;
   padding: 0;
   overflow: hidden;
+  font-family: 'Pixelify Sans', sans-serif;
+  -webkit-font-smoothing: none; /* Keeps pixel text crisp */
 }
 
 body {
   background: #ffffff;
   color: #13263e;
+  font-family: 'Pixelify Sans', sans-serif;
+}
+
+button,
+input,
+textarea,
+select {
+  font-family: inherit;
 }
 
 .root {
@@ -35,7 +47,7 @@ body {
   padding: 0;
   overflow: hidden;
   position: relative;
-  background-color: #DBF1FD;
+  background-color: #93c5e0;
   background-image: repeating-linear-gradient(
     45deg,
     rgba(0, 0, 0, 0.015) 0px,
@@ -89,4 +101,36 @@ body {
   .player-gif { 
     width: 96px; 
   }
+}
+/* ==========================================
+   MINIMALIST HINT TEXT (No box, bracketed)
+   ========================================== */
+.player-start-hint {
+  position: absolute;
+  top: 59%;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 12;
+  white-space: nowrap;
+  opacity: 0.85;
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.player-start-hint span {
+  font-family: 'Pixelify Sans', cursive, sans-serif;
+  font-size: clamp(0.9rem, 1.15vw, 1.1rem);
+  font-weight: 500;
+  color: #e2edf7;
+  letter-spacing: 0.05em;
+  text-shadow: 1px 1px 2px rgba(19, 38, 62, 0.4);
+}
+
+/* Fades out seamlessly 2s after interaction */
+.player-start-hint--fading {
+  opacity: 0;
+  transform: translate(-50%, -4px);
 }

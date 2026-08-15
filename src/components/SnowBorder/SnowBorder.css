@@ -1,0 +1,137 @@
+.snow-border {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 15;
+  overflow: hidden;
+}
+
+/* ==========================================
+   EDGE SNOW BANKS
+   ========================================== */
+.snow-edge {
+  position: absolute;
+  pointer-events: none;
+}
+
+.snow-edge--top {
+  top: 0;
+  left: 0;
+  right: 0;
+  height: clamp(36px, 6vh, 65px);
+  background: linear-gradient(
+    to bottom,
+    rgba(245, 250, 255, 1) 0%,
+    rgba(230, 242, 255, 0.8) 30%,
+    rgba(215, 235, 255, 0.3) 70%,
+    transparent 100%
+  );
+}
+
+.snow-edge--bottom {
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: clamp(40px, 7vh, 75px);
+  background: linear-gradient(
+    to top,
+    rgba(245, 250, 255, 1) 0%,
+    rgba(230, 242, 255, 0.8) 30%,
+    rgba(215, 235, 255, 0.3) 70%,
+    transparent 100%
+  );
+}
+
+.snow-edge--left {
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: clamp(28px, 4vw, 55px);
+  background: linear-gradient(
+    to right,
+    rgba(245, 250, 255, 1) 0%,
+    rgba(230, 242, 255, 0.7) 35%,
+    rgba(215, 235, 255, 0.25) 75%,
+    transparent 100%
+  );
+}
+
+.snow-edge--right {
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: clamp(28px, 4vw, 55px);
+  background: linear-gradient(
+    to left,
+    rgba(245, 250, 255, 1) 0%,
+    rgba(230, 242, 255, 0.7) 35%,
+    rgba(215, 235, 255, 0.25) 75%,
+    transparent 100%
+  );
+}
+
+/* ==========================================
+   CONCAVE (INWARD-CURVED) CORNERS
+   ========================================== */
+.snow-corner {
+  position: absolute;
+  width: clamp(140px, 18vw, 260px);
+  height: clamp(140px, 18vw, 260px);
+  pointer-events: none;
+}
+
+/* Top-Left: Curves inward towards (0, 0) */
+.snow-corner--top-left {
+  top: 0;
+  left: 0;
+  background: radial-gradient(
+    circle at 100% 100%,
+    transparent 0%,
+    transparent 52%,
+    rgba(215, 235, 255, 0.35) 65%,
+    rgba(230, 242, 255, 0.85) 82%,
+    rgba(245, 250, 255, 1) 100%
+  );
+}
+
+/* Top-Right: Curves inward towards (100%, 0) */
+.snow-corner--top-right {
+  top: 0;
+  right: 0;
+  background: radial-gradient(
+    circle at 0% 100%,
+    transparent 0%,
+    transparent 52%,
+    rgba(215, 235, 255, 0.35) 65%,
+    rgba(230, 242, 255, 0.85) 82%,
+    rgba(245, 250, 255, 1) 100%
+  );
+}
+
+/* Bottom-Left: Curves inward towards (0, 100%) */
+.snow-corner--bottom-left {
+  bottom: 0;
+  left: 0;
+  background: radial-gradient(d
+    circle at 100% 0%,
+    transparent 0%,
+    transparent 52%,
+    rgba(215, 235, 255, 0.35) 65%,
+    rgba(230, 242, 255, 0.85) 82%,
+    rgba(245, 250, 255, 1) 100%
+  );
+}
+
+/* Bottom-Right: Curves inward towards (100%, 100%) */
+.snow-corner--bottom-right {
+  bottom: 0;
+  right: 0;
+  background: radial-gradient(
+    circle at 0% 0%,
+    transparent 0%,
+    transparent 52%,
+    rgba(215, 235, 255, 0.35) 65%,
+    rgba(230, 242, 255, 0.85) 82%,
+    rgba(245, 250, 255, 1) 100%
+  );
+}

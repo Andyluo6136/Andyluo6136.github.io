@@ -9,8 +9,7 @@ function Home() {
       </div>
 
       <p className="home-intro">
-        This website is inspired by the 2 things that defined my childhood,
-        hockey and video games. Feel free to explore as much as u want.
+        This website is inspired hockey and video games, the 2 things I loved most growing up. Feel free to explore as much as you want.
       </p>
     </>
   );

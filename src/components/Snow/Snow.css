@@ -1,0 +1,10 @@
+.snow-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none; /* Allows clicking and interacting through the snow */
+  z-index: 50;           /* Sits above the ice/player, but below modals (z-index 100) */
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}

@@ -1,0 +1,160 @@
+.loading-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background-color: #0b1a2d;
+  background-image: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.25) 0px,
+    rgba(0, 0, 0, 0.25) 2px,
+    transparent 2px,
+    transparent 4px
+  );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  pointer-events: all;
+  
+  /* Initial state: fully covering the screen */
+  clip-path: circle(150% at 50% 50%);
+  transition: clip-path 0.9s cubic-bezier(0.7, 0, 0.2, 1);
+}
+
+/* ==========================================
+   PEEPHOLE / IRIS EXPANSION TRANSITION
+   ========================================== */
+.loading-screen--peephole {
+  /* Inverts the mask: opens up the center into the ice world */
+  clip-path: circle(0% at 50% 50%);
+  pointer-events: none;
+}
+
+/* Instantly fade the text/card as the hole expands */
+.loading-screen--peephole .loading-card {
+  opacity: 0;
+  transform: scale(0.92);
+  transition: opacity 0.25s ease-out, transform 0.25s ease-out;
+}
+
+/* CRT monitor framing card */
+.loading-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: clamp(280px, 85vw, 540px);
+  padding: 2.5rem 2rem;
+  background: #13263e;
+  border: 4px solid #82d1ee;
+  outline: 4px solid #0b1a2d;
+  box-shadow: 
+    0 0 0 8px #82d1ee,
+    0 16px 36px rgba(0, 0, 0, 0.6);
+  box-sizing: border-box;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.loading-title {
+  margin: 0;
+  font-family: 'Pixelify Sans', cursive, sans-serif;
+  font-size: clamp(2.4rem, 5vw, 3.4rem);
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 2px;
+  text-shadow: 3px 3px 0px #82d1ee;
+  text-align: center;
+}
+
+.loading-subtitle {
+  margin: 0.2rem 0 2rem 0;
+  font-family: 'Press Start 2P', monospace;
+  font-size: clamp(0.6rem, 1.2vw, 0.75rem);
+  color: #82d1ee;
+  letter-spacing: 1px;
+}
+
+/* Outer Progress Bar Frame */
+.loading-bar-border {
+  width: 100%;
+  height: 28px;
+  background: #0b1a2d;
+  border: 3px solid #82d1ee;
+  padding: 3px;
+  box-sizing: border-box;
+}
+
+/* 8-Bit Pixelated Block Fill */
+.loading-bar-fill {
+  height: 100%;
+  background: #ffffff;
+  background-image: repeating-linear-gradient(
+    90deg,
+    #82d1ee 0px,
+    #82d1ee 8px,
+    #ffffff 8px,
+    #ffffff 12px
+  );
+  box-shadow: 0 0 8px #82d1ee;
+  transition: width 0.15s steps(8);
+}
+
+.loading-details {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 1rem;
+  font-family: 'Press Start 2P', monospace;
+  font-size: clamp(0.55rem, 1vw, 0.68rem);
+  color: #93c5e0;
+}
+
+.loading-action-zone {
+  margin-top: 2rem;
+  min-height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loading-spinner {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.7rem;
+  color: #5b7fa3;
+  letter-spacing: 1px;
+  animation: blink 0.8s infinite alternate;
+}
+
+.loading-start-btn {
+  background: transparent;
+  border: none;
+  font-family: 'Press Start 2P', monospace;
+  font-size: clamp(0.75rem, 1.4vw, 0.9rem);
+  color: #ffffff;
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  letter-spacing: 1px;
+  animation: flashPrompt 0.8s infinite steps(2);
+  outline: none;
+}
+
+.loading-start-btn:hover {
+  color: #82d1ee;
+  transform: scale(1.05);
+}
+
+@keyframes flashPrompt {
+  0% {
+    opacity: 1;
+    text-shadow: 2px 2px 0 #3b5998;
+  }
+  100% {
+    opacity: 0.2;
+    text-shadow: none;
+  }
+}
+
+@keyframes blink {
+  from { opacity: 0.3; }
+  to { opacity: 1; }
+}

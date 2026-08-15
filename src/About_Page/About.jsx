@@ -1,7 +1,7 @@
 import './About.css';
-import { useEffect, useRef, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { usePlayerContext } from '../contexts/PlayerContext';
-
+import portraitImg from '../assets/portrait.webp';
 import displayBoardImg from '../assets/display_board.png';
 import aboutImg from '../assets/about_me.png';
 import aboutAction from '../assets/about_me_action.gif';
@@ -11,54 +11,30 @@ import experienceImg from '../assets/experience.png';
 import experienceAction from '../assets/experience_action.png';
 import rmcLogo from '../assets/rmc_logo.jpeg';
 import aposysLogo from '../assets/aposys_logo.jpeg';
-function AboutIcon({ img, action, label, posClass, onOpen }) {
+
+function AboutIcon({ img, action, label, posClass, targetX, targetY, onOpen }) {
   const { position } = usePlayerContext();
-  const ref = useRef(null);
-  const [center, setCenter] = useState(null);
   const [near, setNear] = useState(false);
 
-  const measure = useCallback(() => {
-    if (!ref.current) return;
-    requestAnimationFrame(() => {
-      if (!ref.current) return;
-      const r = ref.current.getBoundingClientRect();
-      const cx = r.left + r.width / 2;
-      const cy = r.top + r.height / 2;
-      setCenter({ 
-        x: (cx / window.innerWidth) * 100, 
-        y: (cy / window.innerHeight) * 100 
-      });
-    });
-  }, []);
-
   useEffect(() => {
-    measure();
+    if (position?.x == null || position?.y == null) return;
 
-    window.addEventListener('resize', measure);
-    window.addEventListener('scroll', measure);
-
-    const observer = new ResizeObserver(measure);
-    if (ref.current) observer.observe(ref.current);
-
-    return () => {
-      window.removeEventListener('resize', measure);
-      window.removeEventListener('scroll', measure);
-      observer.disconnect();
-    };
-  }, [measure]);
-
-  useEffect(() => {
-    if (!center) return;
-    const THRESHOLD_PCT = 8;
-    const dx = position.x - center.x;
-    const dy = position.y - center.y;
+    // Correct for screen aspect ratio so detection remains circular
+    const aspect = window.innerWidth / (window.innerHeight || 1);
+    const dx = (position.x - targetX) * aspect;
+    const dy = position.y - targetY;
     const dist = Math.hypot(dx, dy);
-    setNear(dist <= THRESHOLD_PCT);
-  }, [position, center]);
+
+    // Expanded interaction thresholds
+    const ENTER_DIST = 14.0;
+    const EXIT_DIST = 18.0;
+
+    setNear((prev) => (prev ? dist <= EXIT_DIST : dist <= ENTER_DIST));
+  }, [position, targetX, targetY]);
 
   useEffect(() => {
     const handleKeyDown = (e) => {
-      if (near && e.code === 'Space') {
+      if (near && (e.code === 'Space' || e.key === 'Enter')) {
         e.preventDefault();
         onOpen(label);
       }
@@ -68,23 +44,19 @@ function AboutIcon({ img, action, label, posClass, onOpen }) {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [near, label, onOpen]);
 
-  const isActive = near;
-
   return (
     <article 
-      ref={ref} 
-      className={`about-puck ${posClass} ${isActive ? 'about-puck--active' : ''}`}
+      className={`about-puck ${posClass} ${near ? 'about-puck--active' : ''}`}
       onClick={() => onOpen(label)}
     >
       <img 
-        src={isActive ? action : img} 
+        src={near ? action : img} 
         alt={label} 
         className="about-puck__img" 
         draggable={false}
-        onLoad={measure}
       />
       <span className="about-puck__label">{label}</span>
-      {isActive && <span className="about-puck__prompt">[SPACE / CLICK]</span>}
+      {near && <span className="about-puck__prompt">[SPACE / CLICK]</span>}
     </article>
   );
 }
@@ -112,10 +84,40 @@ export default function About() {
 
   return (
     <section className="about-page" aria-labelledby="about-heading">
+      {/* Header Title Banner */}
+      <div className="about-header-banner">
+        <h1 className="about-header-title">My Journey and Projects</h1>
+        <p className="about-header-subtitle">Skate to any image and interact to view details</p>
+      </div>
+
       <div className="about-stage">
-        <AboutIcon img={aboutImg} action={aboutAction} label="About Me" posClass="about-me" onOpen={handleOpen} />
-        <AboutIcon img={projectsImg} action={projectsAction} label="Projects" posClass="projects" onOpen={handleOpen} />
-        <AboutIcon img={experienceImg} action={experienceAction} label="Experience" posClass="experience" onOpen={handleOpen} />
+        <AboutIcon 
+          img={aboutImg} 
+          action={aboutAction} 
+          label="About Me" 
+          posClass="about-me" 
+          targetX={75} 
+          targetY={25} 
+          onOpen={handleOpen} 
+        />
+        <AboutIcon 
+          img={projectsImg} 
+          action={projectsAction} 
+          label="Projects" 
+          posClass="projects" 
+          targetX={25} 
+          targetY={25} 
+          onOpen={handleOpen} 
+        />
+        <AboutIcon 
+          img={experienceImg} 
+          action={experienceAction} 
+          label="Experience" 
+          posClass="experience" 
+          targetX={50} 
+          targetY={70} 
+          onOpen={handleOpen} 
+        />
       </div>
 
       {activeModal && (
@@ -129,8 +131,32 @@ export default function About() {
             {/* Inner Parchment Scroll Area */}
             <div className="display-board-content">
               {activeModal === 'About Me' && (
-                <div className="board-text">
-                  <p>Welcome! Here is where your bio and about info will go.</p>
+                <div className="board-about-container">
+                  <h3 className="board-about-heading">
+                    Hi! I'm Andy, a 3rd year computer science student at Queen's University specializing in mathematics and statistics.
+                  </h3>
+
+                  <div className="board-about-body">
+                    <div className="board-about-text">
+                      <p>
+                        I enjoy exploring practical AI solutions to address some of the worlds biggest challenges. In particular,
+                        my current research focuses on advancing machine learning techniques for time-series forecasting. I have developed 
+                        deep neural networks for machine learning pipelines, and worked on various projects involving embedded systems.
+                      </p>
+                      <p> 
+                        I'm very passionate about research, and I am currently working to publish my work on a novel time series forecasting machine learning architecture.
+                        I'm always looking forward to exploring more opportunities to learn and address real-world problems with innovative solutions.
+                      </p>
+                    </div>
+
+                    <div className="board-about-portrait-wrapper">
+                      <img 
+                        src={portraitImg} 
+                        alt="Andy Luo portrait" 
+                        className="board-about-portrait" 
+                      />
+                    </div>
+                  </div>
                 </div>
               )}
 
@@ -151,6 +177,7 @@ export default function About() {
                       </ul>
                     </div>
                   </a>
+
                   <a 
                     href="https://autodrive.engineering.queensu.ca/" 
                     target="_blank" 
@@ -166,6 +193,7 @@ export default function About() {
                       </ul>
                     </div>
                   </a>
+
                   <a 
                     href="https://github.com/owang06/ethicalmousetrap" 
                     target="_blank" 
@@ -204,34 +232,35 @@ export default function About() {
 
               {activeModal === 'Experience' && (
                 <div className="board-projects-list">
-                <a 
-                href="https://www.rmc-cmr.ca/en/mathematics-and-computer-science/department-mathematics-and-computer-science" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="project-card experience-card"
-                >                  
-                  <div className="experience-card__body">
-                  <h3 className="project-title">Royal Military College of Canada (Undergraduate Research Student)</h3>
-                  <p className="project-tools">Python, PyTorch, TCN, SLURM, Bash</p>
-                  <div className="project-desc">
-                    <ul>
-                      <li>Awarded a highly competitive NSERC Undergraduate Student Research Award (USRA) valued at $10,000+ to conduct full-time laboratory research.</li>
-                      <li>Developed a Temporal Convolutional Neural Network (TCN) machine learning pipeline to predict disturbances in Earth’s magnetic field caused by solar storms.</li>
-                      <li>Streamlined parallel GPU workflows on NVIDIA H100 clusters leveraging SLURM workload manager and Bash scripting to scale model training.</li>
-                      <li>Engineered a custom loss function for time-series forecasting addressing asymmetric loss and late-prediction penalties, currently co-authored for publication.</li>
-                    </ul>
-                  </div>
-                </div>
-                <div className="experience-card__logo-wrapper">
-                  <img src={rmcLogo} alt="Royal Military College Logo" className="experience-card__logo" />
-                </div>
+                  <a 
+                    href="https://www.rmc-cmr.ca/en/mathematics-and-computer-science/department-mathematics-and-computer-science" 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="project-card experience-card"
+                  >                  
+                    <div className="experience-card__body">
+                      <h3 className="project-title">Royal Military College of Canada (Undergraduate Research Student)</h3>
+                      <p className="project-tools">Python, PyTorch, TCN, SLURM, Bash</p>
+                      <div className="project-desc">
+                        <ul>
+                          <li>Awarded a highly competitive NSERC Undergraduate Student Research Award (USRA) valued at $10,000+ to conduct full-time laboratory research.</li>
+                          <li>Developed a Temporal Convolutional Neural Network (TCN) machine learning pipeline to predict disturbances in Earth’s magnetic field caused by solar storms.</li>
+                          <li>Streamlined parallel GPU workflows on NVIDIA H100 clusters leveraging SLURM workload manager and Bash scripting to scale model training.</li>
+                          <li>Engineered a custom loss function for time-series forecasting addressing asymmetric loss and late-prediction penalties, currently co-authored for publication.</li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div className="experience-card__logo-wrapper">
+                      <img src={rmcLogo} alt="Royal Military College Logo" className="experience-card__logo" />
+                    </div>
                   </a>
-                    <a 
+
+                  <a 
                     href="https://aposystech.com/" 
                     target="_blank" 
                     rel="noopener noreferrer" 
                     className="project-card experience-card"
-                    >
+                  >
                     <div className="experience-card__body">
                       <h3 className="project-title">ApoSys Technologies Inc. (Embedded Systems Intern)</h3>
                       <p className="project-tools">ROS2, Python, C++, GPS, IMU, Radar</p>
@@ -246,7 +275,7 @@ export default function About() {
                     <div className="experience-card__logo-wrapper">
                       <img src={aposysLogo} alt="ApoSys Technologies Logo" className="experience-card__logo" />
                     </div>
-                </a>
+                  </a>
                 </div>
               )}
             </div>
