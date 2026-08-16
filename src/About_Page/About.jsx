@@ -239,7 +239,7 @@ export default function About() {
                     className="project-card experience-card"
                   >                  
                     <div className="experience-card__body">
-                      <h3 className="project-title">Royal Military College of Canada (Undergraduate Research Student)</h3>
+                      <h3 className="project-title">Royal Military College of Canada (Undergraduate Student Researcher)</h3>
                       <p className="project-tools">Python, PyTorch, TCN, SLURM, Bash</p>
                       <div className="project-desc">
                         <ul>
